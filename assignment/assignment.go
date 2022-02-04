@@ -41,7 +41,48 @@ func StringMask(s string, n uint) string {
 }
 
 func WordSplit(arr [2]string) string {
-	return ""
+
+	if len(arr[0]) == 0 { // empty string input will return "not possible"
+		return "not possible"
+	}
+
+	// initialized required variables
+	input := arr[0]
+	words := strings.Split(arr[1], ",")
+	var result []string
+
+	// looks for the dictionary words in the input string
+	for i := 0; i < len(words); i++ {
+		if strings.Contains(input, words[i]) {
+			result = append(result, words[i])
+		}
+	}
+
+	// if none were found OR some words were found THEN the return value will be "not possible"
+	if result == nil || len(strings.Join(result, "")) < len(input){
+		return "not possible"
+	}
+
+	// Below for loops arranges the index of the return value
+
+	// appends the first word
+	inputArr := strings.Split(input, "")
+	var finalResult []string
+	for i := 0; i < len(result); i++ {
+		if strings.Contains(result[i], inputArr[0]) {
+			finalResult = append(finalResult, result[i])
+		}
+	}
+
+	// appends the remaining word
+	for i := 0; i < len(result); i++ {
+		if !strings.Contains(finalResult[0], result[i]) {
+			finalResult = append(finalResult, result[i])
+		}
+	}
+
+	// returns the final value
+	return strings.Join(finalResult, ",")
 }
 
 func VariadicSet(i ...interface{}) []interface{} {

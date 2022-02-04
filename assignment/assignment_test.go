@@ -161,9 +161,22 @@ func TestWordSplit(t *testing.T) {
 			[2]string{"notcat",words} => not possible
 			[2]string{"bootcamprocks!",words} => not possible
 	*/
-	result := WordSplit([2]string{"hellocat", words})
 
-	assert.Equal(t, "hello,cat", result)
+	cases := []struct{
+		input, dictionary, expected string
+	}{
+		{"hellocat",words, "hello,cat"},
+		{"catbat", words, "cat,bat"},
+		{"yellowapple", words, "yellow,apple"},
+		{"", words, "not possible"},
+		{"notcat", words, "not possible"},
+		{"bootcamprocks!", words, "not possible"},
+	}
+
+	for _, n := range cases {
+		result := WordSplit([2]string{n.input, n.dictionary})
+		assert.Equal(t, n.expected, result)
+	}
 }
 
 func TestVariadicSet(t *testing.T) {
