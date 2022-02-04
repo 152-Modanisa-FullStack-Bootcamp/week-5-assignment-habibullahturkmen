@@ -26,7 +26,22 @@ func AlphabetSoup(s string) string {
 }
 
 func StringMask(s string, n uint) string {
-	return ""
+	length := len(s)
+	units := int(n)
+	list := strings.Split(s, "")
+	for i := 0; i < length; i++ {
+		if i >= units {
+			list[i] = "*"
+		} else if length == 1 {
+			list[i] = "*"
+		} else if length <= units {
+			list[i] = "*"
+		}
+	}
+	if length == 0 {
+		return "*"
+	}
+	return strings.Join(list, "")
 }
 
 func WordSplit(arr [2]string) string {

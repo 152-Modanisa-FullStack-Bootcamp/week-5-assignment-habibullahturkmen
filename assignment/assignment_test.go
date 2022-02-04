@@ -123,9 +123,27 @@ func TestStringMask(t *testing.T) {
 			"string", 7(bigger than len of "string") => "******"
 			"s*r*n*", 3 => "s*r***"
 	*/
-	result := StringMask("!mysecret*", 2)
 
-	assert.Equal(t, "!m********", result)
+	cases := []struct{
+		s string
+		n uint
+		expected string
+	}{
+		{"!mysecret*", 2, "!m********"},
+		{"", 34, "*"}, // n(any positive number) => 34 for istanbul :)
+		{"a", 1, "*"},
+		{"string", 0, "******"},
+		{"string", 3, "str***"},
+		{"string", 5, "strin*"},
+		{"string", 6, "******"},
+		{"string", 7, "******"}, // n (bigger than len of "string")
+		{"s*r*n*", 3, "s*r***"},
+	}
+
+	for _, n := range cases {
+		result := StringMask(n.s, n.n)
+		assert.Equal(t, n.expected, result)
+	}
 }
 
 func TestWordSplit(t *testing.T) {
