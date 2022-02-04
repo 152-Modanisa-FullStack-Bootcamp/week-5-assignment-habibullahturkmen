@@ -19,6 +19,7 @@ func TestAddUint32(t *testing.T) {
 			4294967290, 6 => 0, true
 			4294967290, 10 => 4, true
 	*/
+
 	cases := []struct{
 		xIn, yIn, want uint32
 		wantBool bool
@@ -55,9 +56,27 @@ func TestCeilNumber(t *testing.T) {
 			42.99 => 43
 			43.13 => 43.25
 	*/
-	point := CeilNumber(42.42)
 
-	assert.Equal(t, 42.50, point)
+	cases := []struct{
+		expected, input float64
+	}{
+		// test cases
+		{42.50, 42.42},
+		{42, 42},
+		{42.25, 42.01},
+		{42.25, 42.24},
+		{42.25, 42.25},
+		{42.50, 42.26},
+		{42.75, 42.55},
+		{42.75, 42.75},
+		{43, 42.76},
+		{43, 42.99},
+		{43.25, 43.13},
+	}
+
+	for _, n := range cases {
+		assert.Equal(t, n.expected, CeilNumber(n.input))
+	}
 }
 
 func TestAlphabetSoup(t *testing.T) {
