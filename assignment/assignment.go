@@ -29,17 +29,13 @@ func StringMask(s string, n uint) string {
 	length := len(s)
 	units := int(n)
 	list := strings.Split(s, "")
+	if length == 0 || length == 1{
+		return "*"
+	}
 	for i := 0; i < length; i++ {
-		if i >= units {
-			list[i] = "*"
-		} else if length == 1 {
-			list[i] = "*"
-		} else if length <= units {
+		if i >= units || length <= units {
 			list[i] = "*"
 		}
-	}
-	if length == 0 {
-		return "*"
 	}
 	return strings.Join(list, "")
 }
