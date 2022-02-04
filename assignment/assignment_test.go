@@ -60,7 +60,6 @@ func TestCeilNumber(t *testing.T) {
 	cases := []struct{
 		expected, input float64
 	}{
-		// test cases
 		{42.50, 42.42},
 		{42, 42},
 		{42.25, 42.01},
@@ -91,9 +90,23 @@ func TestAlphabetSoup(t *testing.T) {
 			"bac" => "abc"
 			"cba" => "abc"
 	*/
-	result := AlphabetSoup("hello")
 
-	assert.Equal(t, "ehllo", result)
+	cases := []struct {
+		input, expected string
+	} {
+		{"hello", "ehllo"},
+		{"", ""},
+		{"h", "h"},
+		{"ab", "ab"},
+		{"ba", "ab"},
+		{"bac", "abc"},
+		{"cba", "abc"},
+	}
+
+	for _, n := range cases {
+		result := AlphabetSoup(n.input)
+		assert.Equal(t, n.expected, result)
+	}
 }
 
 func TestStringMask(t *testing.T) {
