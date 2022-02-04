@@ -35,11 +35,7 @@ func TestAddUint32(t *testing.T) {
 	for _, n := range cases {
 		sum, overflow := AddUint32(n.xIn, n.yIn)
 		assert.Equal(t, n.want, sum)
-		if overflow {
-			assert.True(t, overflow)
-		} else {
-			assert.False(t, overflow)
-		}
+		assert.Equal(t, overflow, n.wantBool)
 	}
 }
 
