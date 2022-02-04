@@ -74,7 +74,8 @@ func TestCeilNumber(t *testing.T) {
 	}
 
 	for _, n := range cases {
-		assert.Equal(t, n.expected, CeilNumber(n.input))
+		result := CeilNumber(n.input)
+		assert.Equal(t, n.expected, result)
 	}
 }
 
