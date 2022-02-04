@@ -19,10 +19,28 @@ func TestAddUint32(t *testing.T) {
 			4294967290, 6 => 0, true
 			4294967290, 10 => 4, true
 	*/
-	sum, overflow := AddUint32(math.MaxUint32, 1)
+	cases := []struct{
+		xIn, yIn, want uint32
+		wantBool bool
+	}{
+		{math.MaxUint32, 1, 0, true},
+		{1, 1, 2, false},
+		{42, 2701, 2743, false},
+		{42, math.MaxUint32, 41, true},
+		{4294967290, 5, 4294967295, false},
+		{4294967290, 6, 0, true},
+		{4294967290, 10, 4, true},
+	}
 
-	assert.Equal(t, uint32(0), sum)
-	assert.True(t, overflow)
+	for _, n := range cases {
+		sum, overflow := AddUint32(n.xIn, n.yIn)
+		assert.Equal(t, n.want, sum)
+		if overflow {
+			assert.True(t, overflow)
+		} else {
+			assert.False(t, overflow)
+		}
+	}
 }
 
 func TestCeilNumber(t *testing.T) {

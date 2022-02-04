@@ -1,7 +1,18 @@
 package assignment
 
+import (
+	"math"
+	"sort"
+	"strings"
+)
+
 func AddUint32(x, y uint32) (uint32, bool) {
-	return 0, false
+	a := uint64(x)
+	b  := uint64(y)
+	if a+b > math.MaxUint32 {
+		return x+y, true
+	}
+	return x+y, false
 }
 
 func CeilNumber(f float64) float64 {
@@ -9,7 +20,9 @@ func CeilNumber(f float64) float64 {
 }
 
 func AlphabetSoup(s string) string {
-	return ""
+	n := strings.Split(s, "")
+	sort.Strings(n)
+	return strings.Join(n, "")
 }
 
 func StringMask(s string, n uint) string {
