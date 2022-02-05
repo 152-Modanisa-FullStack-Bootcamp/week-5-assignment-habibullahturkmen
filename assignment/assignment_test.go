@@ -186,11 +186,22 @@ func TestVariadicSet(t *testing.T) {
 
 		Convert inputs to set(no duplicate element)
 		cases need to pass:
-			4,2,5,4,2,4 => []interface{4,2,5}
-			"bootcamp","rocks!","really","rocks! => []interface{"bootcamp","rocks!","really"}
-			1,uint32(1),"first",2,uint32(2),"second",1,uint32(2),"first" => []interface{1,uint32(1),"first",2,uint32(2),"second"}
+			4,2,5,4,2,4 => []interface{}{4,2,5}
+			"bootcamp","rocks!","really","rocks!" => []interface{}{"bootcamp","rocks!","really"}
+			1,uint32(1),"first",2,uint32(2),"second",1,uint32(2),"first" => []interface{}{1,uint32(1),"first",2,uint32(2),"second"}
 	*/
-	set := VariadicSet(4, 2, 5, 4, 2, 4)
 
-	assert.Equal(t, []interface{}{4, 2, 5}, set)
+	cases := []struct{
+		input []interface{}
+		expected []interface{}
+	}{
+		{[]interface{}{4, 2, 5, 4, 2, 4}, []interface{}{4,2,5}},
+		{[]interface{}{"bootcamp","rocks!","really","rocks!"}, []interface{}{"bootcamp","rocks!","really"}},
+		{[]interface{}{1,uint32(1),"first",2,uint32(2),"second",1,uint32(2),"first"}, []interface{}{1,uint32(1),"first",2,uint32(2),"second"}},
+	}
+
+	for _, n := range cases {
+		set := VariadicSet(n.input...)
+		assert.Equal(t, n.expected, set)
+	}
 }

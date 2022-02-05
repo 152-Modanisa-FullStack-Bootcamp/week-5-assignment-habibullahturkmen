@@ -86,5 +86,14 @@ func WordSplit(arr [2]string) string {
 }
 
 func VariadicSet(i ...interface{}) []interface{} {
-	return nil
+	items := make(map[interface{}]bool) // create an (items) map with Key-Type of (Interface) and Value-Type of (Boolean)
+	var result []interface{}
+	for _, item := range i { // loops through i Interface's items
+		n := items[item] // initialize i's nth (item's) boolean value to n
+		if !n {          // IF n is !false which means i's nth (item) isn't available in items variable, THEN
+			items[item] = true            // add (item) interface as Key-Type and (true) as Value-Type to items map
+			result = append(result, item) // and append (item) to (result) interface
+		}
+	}
+	return result
 }
