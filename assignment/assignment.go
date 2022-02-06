@@ -53,10 +53,10 @@ func WordSplit(arr [2]string) string {
 	words := strings.Split(arr[1], ",")
 	var result []string
 
-	// looks for the dictionary words in the input string
+	// looks for the dictionary words in the input string and arranges them correctly
 	for i := 0; i < len(words); i++ {
 		if strings.Contains(input, words[i]) {
-			result = append(result, words[i])
+			result = append([]string{words[i]}, result...)
 		}
 	}
 
@@ -65,26 +65,8 @@ func WordSplit(arr [2]string) string {
 		return "not possible"
 	}
 
-	// Below for loops arranges the index of the return value
-
-	// appends the first word
-	inputArr := strings.Split(input, "")
-	var finalResult []string
-	for i := 0; i < len(result); i++ {
-		if strings.Contains(result[i], inputArr[0]) {
-			finalResult = append(finalResult, result[i])
-		}
-	}
-
-	// appends the remaining word
-	for i := 0; i < len(result); i++ {
-		if !strings.Contains(finalResult[0], result[i]) {
-			finalResult = append(finalResult, result[i])
-		}
-	}
-
 	// returns the final value
-	return strings.Join(finalResult, ",")
+	return strings.Join(result, ",")
 }
 
 func VariadicSet(i ...interface{}) []interface{} {
